@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
+
 
 //외래키의 주인만이 외래키를 control할 수 있다.
 @Transactional
@@ -114,11 +116,12 @@ public class OneToOneTest {
         System.out.println("user.getName() = " + user.getName());
 
         // 해당 고객이 주문한 음식 정보 조회
-//        Food food = user.getFood();
-//        System.out.println("food.getName() = " + food.getName());
-//        System.out.println("food.getPrice() = " + food.getPrice());
+        List<Food> foodList = user.getFoodList();
+        for (Food food : foodList) {
+            System.out.println("food.getName() = " + food.getName());
+            System.out.println("food.getPrice() = " + food.getPrice());
+        }
     }
-
 
 
 
