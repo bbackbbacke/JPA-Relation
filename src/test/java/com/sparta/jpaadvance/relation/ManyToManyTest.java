@@ -5,6 +5,7 @@ import com.sparta.jpaadvance.entity.User;
 import com.sparta.jpaadvance.repository.FoodRepository;
 import com.sparta.jpaadvance.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,9 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Nested
 @Transactional
 @SpringBootTest
-public class ManyToManyTest {
+class ManyToManyTest {
 
     @Autowired
     UserRepository userRepository;
@@ -36,8 +38,8 @@ public class ManyToManyTest {
         Food food = new Food();
         food.setName("후라이드 치킨");
         food.setPrice(15000);
-        food.getUserList().add(user); //외래키 설정 (1번푸드(후라이드치킨)에 1번유저)
-        food.getUserList().add(user2); //외래키 설정 (1번푸드(후라이드치킨)에 2번유저)
+//        food.getUserList().add(user); //외래키 설정 (1번푸드(후라이드치킨)에 1번유저)
+//        food.getUserList().add(user2); //외래키 설정 (1번푸드(후라이드치킨)에 2번유저)
         //1, 1 (food_id, user_id)
         //1, 2 (food_id, user_id)
 
@@ -64,8 +66,8 @@ public class ManyToManyTest {
         // 외래 키의 주인이 아닌 User 에서 Food 를 저장해보겠습니다.
         User user = new User();
         user.setName("Robbie");
-        user.getFoodList().add(food);
-        user.getFoodList().add(food2);
+//        user.getFoodList().add(food);
+//        user.getFoodList().add(food2);
 
         userRepository.save(user);
         foodRepository.save(food);
@@ -91,8 +93,8 @@ public class ManyToManyTest {
         // 외래 키(연관 관계) 설정을 위해 Food 에서 userList 를 호출해 user 객체 자신을 add 합니다.
         User user = new User();
         user.setName("Robbie");
-        user.addFoodList(food);
-        user.addFoodList(food2);
+//        user.addFoodList(food);
+//        user.addFoodList(food2);
 
 
         userRepository.save(user);
@@ -115,13 +117,13 @@ public class ManyToManyTest {
         Food food = new Food();
         food.setName("아보카도 피자");
         food.setPrice(50000);
-        food.getUserList().add(user); // 외래 키(연관 관계) 설정
-        food.getUserList().add(user2); // 외래 키(연관 관계) 설정
+//        food.getUserList().add(user); // 외래 키(연관 관계) 설정
+//        food.getUserList().add(user2); // 외래 키(연관 관계) 설정
 
         Food food2 = new Food();
         food2.setName("고구마 피자");
         food2.setPrice(30000);
-        food2.getUserList().add(user); // 외래 키(연관 관계) 설정
+//        food2.getUserList().add(user); // 외래 키(연관 관계) 설정
 
         userRepository.save(user);
         userRepository.save(user2);
@@ -131,15 +133,14 @@ public class ManyToManyTest {
         // User 를 통해 food 의 정보 조회
         System.out.println("user.getName() = " + user.getName());
 
-        List<Food> foodList = user.getFoodList();
-        for (Food f : foodList) {
-            System.out.println("f.getName() = " + f.getName());
-            System.out.println("f.getPrice() = " + f.getPrice());
-        }
-
-        // 외래 키의 주인이 아닌 User 객체에 Food 의 정보를 넣어주지 않아도 DB 저장에는 문제가 없지만
-        // 이처럼 User 를 사용하여 food 의 정보를 조회할 수는 없습니다.
+//        List<Food> foodList = user.getFoodList();
+//        for (Food f : foodList) {
+//            System.out.println("f.getName() = " + f.getName());
+//            System.out.println("f.getPrice() = " + f.getPrice());
     }
+
+    // 외래 키의 주인이 아닌 User 객체에 Food 의 정보를 넣어주지 않아도 DB 저장에는 문제가 없지만
+    // 이처럼 User 를 사용하여 food 의 정보를 조회할 수는 없습니다.
 
     @Test
     @Rollback(value = false)
@@ -158,13 +159,13 @@ public class ManyToManyTest {
         Food food = new Food();
         food.setName("아보카도 피자");
         food.setPrice(50000);
-        food.addUserList(user);
-        food.addUserList(user2);
+//        food.addUserList(user);
+//        food.addUserList(user2);
 
         Food food2 = new Food();
         food2.setName("고구마 피자");
         food2.setPrice(30000);
-        food2.addUserList(user);
+//        food2.addUserList(user);
 
 
         userRepository.save(user);
@@ -173,17 +174,15 @@ public class ManyToManyTest {
         foodRepository.save(food2);
 
 
-
-
         // 조회 TEST
         // User 를 통해 food 의 정보 조회
         System.out.println("user.getName() = " + user.getName());
 
-        List<Food> foodList = user.getFoodList();
-        for (Food f : foodList) {
-            System.out.println("f.getName() = " + f.getName());
-            System.out.println("f.getPrice() = " + f.getPrice());
-        }
+//        List<Food> foodList = user.getFoodList();
+//        for (Food f : foodList) {
+//            System.out.println("f.getName() = " + f.getName());
+//            System.out.println("f.getPrice() = " + f.getPrice());
+//        }
     }
 
     @Test
@@ -193,11 +192,11 @@ public class ManyToManyTest {
         // 음식 정보 조회
         System.out.println("food.getName() = " + food.getName());
 
-        // 음식을 주문한 고객 정보 조회
-        List<User> userList = food.getUserList();
-        for (User user : userList) {
-            System.out.println("user.getName() = " + user.getName());
-        }
+//        // 음식을 주문한 고객 정보 조회
+//        List<User> userList = food.getUserList();
+//        for (User user : userList) {
+//            System.out.println("user.getName() = " + user.getName());
+//        }
     }
 
     @Test
@@ -208,10 +207,10 @@ public class ManyToManyTest {
         System.out.println("user.getName() = " + user.getName());
 
         // 해당 고객이 주문한 음식 정보 조회
-        List<Food> foodList = user.getFoodList();
-        for (Food food : foodList) {
-            System.out.println("food.getName() = " + food.getName());
-            System.out.println("food.getPrice() = " + food.getPrice());
-        }
+//        List<Food> foodList = user.getFoodList();
+//        for (Food food : foodList) {
+//            System.out.println("food.getName() = " + food.getName());
+//            System.out.println("food.getPrice() = " + food.getPrice());
+//        }
     }
 }
